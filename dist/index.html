@@ -38,6 +38,32 @@
 
     <div class="overlay-window" id="overlay-window"></div> <!--the overlay window will be invisible until it is invoked by JavaScript function dynamically-->
 
+    <div class="start-game-modal" id="start-game-modal"><!--the start-game-modal will be invisible until it is invoked by JavaScript function dynamically-->
+        <div class="start-game-modal-content">
+            <h2 class="welcome-msg">Welcome to Battleship Game</h2>
+
+            <h3 class="place-ship-txt">Please place your Ships!</h3>
+
+            <div class="info">
+                <p class="ships-left"><span class="value" value>7</span><br> Ships left</p>
+
+                <button class="btn" rotate-ship-btn>Horizontal</button>
+
+                <button class="btn clear" clear-all-btn>Clear</button>
+            </div>
+
+            <div class="choice-board" id="choice-board"></div>
+
+            <div class="bottom-buttons">
+                <button class="btn random" randomize-btn>Randomize</button>
+
+                <button class="btn start" start-btn>Start</button>
+            </div>
+
+            <div class="ship-drag"></div>
+        </div>
+    </div>
+    
     <script src="main.js"></script>
 </body>
 </html>
