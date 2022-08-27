@@ -47,6 +47,25 @@ function placeMark(field, currentClass) { //allowing to manipulate DOM to add si
     field.classList.add(currentClass);
 }
 
+function computerPlay(currentTurn) {
+    if (currentTurn === 'computer') {
+    let fieldElements = document.querySelectorAll('#board-player [data-id]');
+
+    const random = Math.floor(Math.random() * fieldElements.length);
+    let randomField = fieldElements[random];
+    if(randomField.className.includes('miss') === true) {
+        computerPlay(currentTurn);
+    } else {
+        randomField.addEventListener('click', () => {
+            randomField.classList.add('miss');
+        })
+        let result = randomField.click();//randomly chosen field will be clicked by click() method
+        currentTurn = 'player';
+        return result;
+    }
+    } 
+}
+
 function dragShip() {
 
 }
