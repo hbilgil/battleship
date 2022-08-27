@@ -145,4 +145,31 @@ function eraseAllColor() {
     })
 }
 
+function clearChoiceBoard() {
+    
+    const shipsLeftCounter = document.querySelector('[value]');
+    shipsLeftCounter.textContent = 7;
+
+    const choiceBoard = document.getElementById('choice-board');
+    let choiceBoardGridPixels = choiceBoard.querySelectorAll('div');
+    choiceBoardGridPixels.forEach(gridPixel => {
+        gridPixel.style.backgroundColor = '#ffffff';
+        gridPixel.textContent = null;
+    });
+
+    while (choiceBoard.firstChild) choiceBoard.removeChild(choiceBoard.firstChild);
+
+    choiceBoard.style.setProperty('--grid-rows', 10);
+    choiceBoard.style.setProperty('--grid-cols', 10);
+
+    for (let i = 0; i < (10 * 10); i++) {
+    let cell = document.createElement('div');
+    cell.classList.add('grid-item');
+    cell.dataset.id = i;
+    choiceBoard.appendChild(cell);
+    cell.addEventListener('mouseover', dragShip);
+    cell.addEventListener('click', dropShip);
+    }
+}
+
 createGrid(10);
