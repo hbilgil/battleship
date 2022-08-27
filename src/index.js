@@ -176,4 +176,25 @@ function setGame() {
     closeStartGameModal();
 }
 
+const endGameModalBtn = document.querySelector('[end-game-modal-btn]');
+endGameModalBtn.addEventListener('click', restartGame);
+
+const clearBtn = document.querySelector('[clear-all-btn]');
+clearBtn.addEventListener('click', clearChoiceBoard);
+
+const startBtn = document.querySelector('[start-btn]');
+startBtn.addEventListener('click', setGame);
+
+const rotateBtn = document.querySelector('[rotate-ship-btn]');
+rotateBtn.addEventListener('click', () => {
+    rotateBtn.classList.toggle('horizontal');
+    if(rotateBtn.textContent === 'Horizontal') {
+        rotateBtn.textContent = 'Vertical';
+    }
+    else if (rotateBtn.textContent === 'Vertical') {
+        rotateBtn.textContent = 'Horizontal';
+    }
+})
+
 createGrid(10);
+restartGame();
