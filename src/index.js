@@ -26,4 +26,21 @@ function createGrid(value) { //allowing to create grid items (10*10) inside the 
     })
 };
 
+function pushClick(e) { //allowing the players to click cells on the enemy board when mouse clicked
+    let currentTurn = 'computer';
+    const field = e.target; //the exact field element when clicked
+    if(field.className.includes('miss') === true) return;
+    const currentClass = 'miss';
+    placeMark(field, currentClass);//placeMark method is called which is nested in the displayController to place X or O sign
+    computerPlay(currentTurn);
+    /*if(checkWinner(currentClass)){
+      displayController.endGameMessage(false); //endGameMessage method is called which is nested in the displayController with false property if NOT a draw
+    } else if(checkDraw()) {
+      displayController.endGameMessage(true); //endGameMessage method is called which is nested in the displayController with true property if a draw
+    } else {
+      displayController.changeMark() //changeMark method is called which is nested in the displayController, if neither a win Nor a draw
+      displayController.setBoardHovers() //setBoardHovers method is called which is nested in the displayController, if neither a win Nor a draw
+    }*/
+}
+
 createGrid(10);
