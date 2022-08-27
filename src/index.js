@@ -277,11 +277,7 @@ function declareWinner(boardName) {
     }
 }
 
-restartGame();
-
-/*---EVENT LISTENERS---*/
-
-rotateBtn.addEventListener('click', () => {
+function toggleDirection() {
     rotateBtn.classList.toggle('horizontal');
     if(rotateBtn.textContent === 'Horizontal') {
         rotateBtn.textContent = 'Vertical';
@@ -289,8 +285,13 @@ rotateBtn.addEventListener('click', () => {
     else if (rotateBtn.textContent === 'Vertical') {
         rotateBtn.textContent = 'Horizontal';
     }
-})
+}
 
+restartGame();
+
+/*---EVENT LISTENERS---*/
+
+rotateBtn.addEventListener('click', toggleDirection);
 clearBtn.addEventListener('click', clearChoiceBoard);
 randomizeBtn.addEventListener('click', randomAllocation);
 endGameModalBtn.addEventListener('click', restartGame);
