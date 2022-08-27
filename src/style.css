@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@800&display=swap');
 
 /*-----GLOBAL DECLARATIONS-----*/
 
@@ -131,4 +135,194 @@ body {
 .footer a:active { 
     text-decoration: none;
     color: white;
+}
+
+/*-----HIDDEN PARTS-----*/
+
+/*--Overlay Window--*/
+
+.overlay-window {
+    display: none; /*invisible when inactive*/
+    position: absolute; /*the div will be fixed even if mouse scrolled down*/
+    top: 0; /*exact place of the div*/
+    left: 0; /*exact place of the div*/
+    width: 100%;
+    min-height: 100%;
+    background-color:black;
+    opacity: 0.7;
+}
+
+.overlay-window.active {
+    display: block;
+}
+
+.end-game-modal,
+.start-game-modal {
+    display: none;
+    position: fixed;
+    z-index: 1; /*the div will be in front of the overlayWindow*/
+    top: 50%; /*exact place of the div*/
+    left: 50%; /*exact place of the div*/
+    transform: translate(-50%, -50%) scale(0); /*will be animated*/
+    transition: 200ms ease-in-out;
+    box-shadow: 0 0 50px rgba(249, 248, 248, 0.5);
+    background-color:gainsboro;
+}
+
+.end-game-modal {
+    width: 40%;
+    min-height: 30%;
+    padding: 2vw;
+    border-radius: 8px;
+}
+
+.start-game-modal {
+    width: 50%;
+    min-height: 80%;
+    padding: 2vw;
+}
+
+.end-game-modal.active,
+.start-game-modal.active {
+    display: block;
+    transform: translate(-50%, -50%) scale(1);
+    animation: fadeIn 1s;
+}
+
+.end-game-modal-content, 
+.start-game-modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.end-game-modal-content{
+    gap: 2vh;
+}
+
+.start-game-modal-content  {
+    gap: 2vh;
+}
+
+.end-game-modal-message {
+    font-size: 4vw;
+    font-family: 'Big Shoulders Stencil Display', cursive;
+    font-weight: bold;
+    padding: 20px;
+    text-align: center;
+}
+
+.welcome-msg {
+    font-size: 4vh;
+    font-family: 'Big Shoulders Stencil Display', cursive;
+    font-weight: bold;
+}
+
+.place-ship-txt {
+    font-size: 2.5vh;
+    font-weight: 800;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3vh;
+    gap: 2vw;
+}
+
+.ships-left {
+    text-align: center;
+}
+
+.value {
+    font-weight: bold;
+    font-size: 2rem;
+    color:blue;
+}
+
+.choice-board{
+    height: fit-content;
+    width: fit-content;
+    display: grid;
+    grid-template-rows: repeat(var(--grid-rows), 4vh);
+    grid-template-columns: repeat(var(--grid-cols), 4vh);
+    gap: 1px;
+    border: 2px solid black;
+}
+
+.choice-board .grid-item:hover {
+    background-color: gainsboro;
+    cursor: pointer;
+}
+
+.bottom-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 3vh;
+    gap: 2vw;
+}
+
+.btn {
+    appearance: none;
+    background-color: white;
+    border: 2px solid #1A1A1A;
+    border-radius: 15px;
+    color: #3B3B3B;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 10px;
+    min-height: 20px;
+    min-width: 100px;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    outline: none;
+    padding: 16px 24px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 20%;
+    will-change: transform;
+}
+
+.random {
+    width: 25%;
+}
+
+.horizontal {
+    font-weight: bold;
+}
+
+.btn:disabled {
+  pointer-events: none;
+}
+
+.btn:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.clear:hover {
+    background-color: crimson;
+}
+
+.start:hover,
+.play-again:hover {
+    background-color:rgb(28, 217, 154);
+    color: black;
+}
+
+.btn:active {
+  box-shadow: none;
+  transform: translateY(0);
 }
