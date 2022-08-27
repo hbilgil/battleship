@@ -1,0 +1,25 @@
+/*-----GLOBAL DECLARATIONS-----*/
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    --cell-border-color:white;
+    --grid-cols: 1;
+    --grid-rows: 1;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-items: space-between;
+    justify-content: space-between;
+    font-family: 'Nunito', sans-serif;
+    background-color:lightgrey;
+    min-height: 100vh;
+}
