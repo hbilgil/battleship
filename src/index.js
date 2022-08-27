@@ -43,4 +43,12 @@ function pushClick(e) { //allowing the players to click cells on the enemy board
     }*/
 }
 
+function dragShip() {
+
+}
+
+function dropShip() {
+
+}
+
 createGrid(10);
