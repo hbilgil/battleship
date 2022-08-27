@@ -112,4 +112,20 @@ function restartGame() {
     openStartGameModal();
 }
 
+function makeContentsDefault() {
+    eraseAllColor();
+
+    const playerFleetContainer = document.getElementById('board-player');
+    const enemyFleetContainer = document.getElementById('board-enemy');
+    const choiceBoard = document.getElementById('choice-board');
+
+    let boards = [playerFleetContainer, enemyFleetContainer, choiceBoard];
+
+    boards.forEach((board) => { //array of boards handled one by one
+        while (board.firstChild) board.removeChild(board.firstChild); //we have to completely delete child nodes created as default for preventing rewriting
+    });
+
+    createGrid(10);
+}
+
 createGrid(10);
