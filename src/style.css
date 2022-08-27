@@ -99,3 +99,36 @@ body {
     background-color: gainsboro;
     cursor: pointer;
 }
+
+/*---FOOTER SECTION---*/
+
+.footer {
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+    padding: 5px;
+    background-color: black;
+    opacity: 0.8;
+    color: white;
+}
+  
+.footer a:link { 
+    text-decoration: none;
+    color: white;
+}
+  
+.footer a:visited { 
+    text-decoration: none;
+    color: white;
+}
+  
+.footer a:hover { 
+    text-decoration: none;
+    transition: 0.3s ease;
+    color:fuchsia;
+}
+  
+.footer a:active { 
+    text-decoration: none;
+    color: white;
+}
