@@ -90,4 +90,20 @@ function closeStartGameModal() {
     startGameModal.classList.remove('active');
 }
 
+function openEndGameModal() {
+    const overlayWindow = document.getElementById('overlay-window');
+    const endGameModal = document.getElementById('end-game-modal');
+
+    overlayWindow.classList.add('active');
+    endGameModal.classList.add('active');
+};
+
+function closeEndGameModal() {
+    const overlayWindow = document.getElementById('overlay-window');
+    const endGameModal = document.getElementById('end-game-modal');
+
+    overlayWindow.classList.remove('active');
+    endGameModal.classList.remove('active');
+};
+
 createGrid(10);
