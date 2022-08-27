@@ -63,7 +63,7 @@ function computerPlay(currentTurn) {
         currentTurn = 'player';
         return result;
     }
-    } 
+    }
 }
 
 function dragShip() {
@@ -72,6 +72,22 @@ function dragShip() {
 
 function dropShip() {
 
+}
+
+function openStartGameModal() { //allowing to create grid items (10*10) inside the boards dynamically
+    const overlayWindow = document.getElementById('overlay-window');
+    const startGameModal = document.getElementById('start-game-modal');
+
+    overlayWindow.classList.add('active');
+    startGameModal.classList.add('active');
+};
+
+function closeStartGameModal() {
+    const overlayWindow = document.getElementById('overlay-window');
+    const startGameModal = document.getElementById('start-game-modal');
+
+    overlayWindow.classList.remove('active');
+    startGameModal.classList.remove('active');
 }
 
 createGrid(10);
