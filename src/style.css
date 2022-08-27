@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
 /*-----GLOBAL DECLARATIONS-----*/
 
 *,
@@ -37,4 +39,63 @@ body {
     letter-spacing: 2vw;
     line-height: 22vh;
     text-align: center;
+}
+
+/*---MAIN DIV---*/
+
+.main{
+    display: flex;
+    justify-content: center;
+    margin-top: 1vh;
+}
+
+.board-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.board-header {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.5vw;
+    letter-spacing: 0.5vw;
+}
+
+.player {
+    color: green;
+}
+.enemy {
+    color:crimson;
+}
+
+.board {
+    height: fit-content;
+    width: fit-content;
+    margin: 2rem;
+    display: grid;
+    grid-template-rows: repeat(var(--grid-rows), 4vh);
+    grid-template-columns: repeat(var(--grid-cols), 4vh);
+    gap: 1px;
+    border: 3px solid black;
+}
+
+.grid-item {
+    border: 0ch solid gainsboro;
+    background: var(--cell-border-color);
+}
+
+.miss {
+    background-color:rgb(28, 217, 154);
+    cursor: not-allowed;
+}
+
+.hit {
+    background-color: crimson;
+    cursor: not-allowed;
+}
+
+#board-enemy .grid-item:not(.miss):hover,
+#board-enemy .grid-item:not(.hit):hover {
+    background-color: gainsboro;
+    cursor: pointer;
 }
