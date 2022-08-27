@@ -98,8 +98,8 @@ body {
     cursor: not-allowed;
 }
 
-#board-player .grid-item.hit
-#board-enemy .grid-item.hit {
+#board-player .grid-item.has-ship.hit.miss
+#board-enemy .grid-item.has-ship.hit.miss {
     background-color: crimson;
     cursor: not-allowed;
 }
@@ -252,9 +252,16 @@ body {
     border: 2px solid black;
 }
 
-.choice-board .grid-item:hover {
-    background-color: gainsboro;
+.choice-board .grid-item {
     cursor: pointer;
+}
+
+.has-ship {
+    background-color: cadetblue;
+}
+
+.ship-show {
+    background-color: rgba(95, 158, 160, 0.596);
 }
 
 .bottom-buttons {
