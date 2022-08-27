@@ -172,4 +172,8 @@ function clearChoiceBoard() {
     }
 }
 
+function setGame() {
+    closeStartGameModal();
+}
+
 createGrid(10);
