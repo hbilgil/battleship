@@ -88,20 +88,20 @@ body {
     background: var(--cell-border-color);
 }
 
-.miss {
+#board-enemy .grid-item {
+    cursor: pointer;
+}
+
+#board-player .grid-item.miss,
+#board-enemy .grid-item.miss {
     background-color:rgb(28, 217, 154);
     cursor: not-allowed;
 }
 
-.hit {
+#board-player .grid-item.hit
+#board-enemy .grid-item.hit {
     background-color: crimson;
     cursor: not-allowed;
-}
-
-#board-enemy .grid-item:not(.miss):hover,
-#board-enemy .grid-item:not(.hit):hover {
-    background-color: gainsboro;
-    cursor: pointer;
 }
 
 /*---FOOTER SECTION---*/
