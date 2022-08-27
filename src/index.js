@@ -106,4 +106,10 @@ function closeEndGameModal() {
     endGameModal.classList.remove('active');
 };
 
+function restartGame() {
+    closeEndGameModal();
+    makeContentsDefault();
+    openStartGameModal();
+}
+
 createGrid(10);
