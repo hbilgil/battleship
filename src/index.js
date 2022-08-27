@@ -43,6 +43,10 @@ function pushClick(e) { //allowing the players to click cells on the enemy board
     }*/
 }
 
+function placeMark(field, currentClass) { //allowing to manipulate DOM to add sign into the gameBoard
+    field.classList.add(currentClass);
+}
+
 function dragShip() {
 
 }
