@@ -128,4 +128,21 @@ function makeContentsDefault() {
     createGrid(10);
 }
 
+function eraseAllColor() {
+
+    const playerFleetContainer = document.getElementById('board-player');
+    const enemyFleetContainer = document.getElementById('board-enemy');
+    const choiceBoard = document.getElementById('choice-board');
+
+    let boards = [playerFleetContainer, enemyFleetContainer, choiceBoard];
+
+    boards.forEach((board) => { //array of boards handled one by one
+        let gridPixels = board.querySelectorAll('div');
+        gridPixels.forEach(gridPixel => {
+            gridPixel.style.backgroundColor = '#ffffff';
+            gridPixel.textContent = null;
+        });
+    })
+}
+
 createGrid(10);
