@@ -5,8 +5,12 @@ const gameBoard = function boardFactory() {
   let body = [];
   const showShips = false;
 
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 0; i < 100; i++) {
     body.push({ isShot: false, hasShip: false });
+  }
+
+  function getRandomNumber(number) {
+    return Math.floor(Math.random() * number);
   }
 
   function receiveAttack(shotIndex) {
@@ -17,37 +21,32 @@ const gameBoard = function boardFactory() {
     return body[shotIndex].hasShip;
   }
 
-  function getRandomNumber(number) {
-    return Math.floor(Math.random() * number);
-  }
-
   function allShipsSunk() {
-    let shipsSunk = true;
     body.forEach((cell) => {
       if (cell.hasShip === true && cell.isShot === false) {
-        shipsSunk = false;
+        return false;
       }
     });
-    return shipsSunk;
+    return true;
   }
 
   function areAllShipsSunk() {
-    if (!body.find((x) => x.hasShip === true)) {
+    if (!body.find((cell) => cell.hasShip === true)) {
       return false;
     }
-    if (body.find((x) => x.hasShip === true && x.isShot === false)) {
+    if (body.find((cell) => cell.hasShip === true && cell.isShot === false)) {
       return false;
     }
     return true;
   }
 
-  function isPlaceable(startIndex, shipObj) {
+  function isPlaceable(startIndex, shipObject) {
     let testIndex = startIndex;
-    if (shipObj.isHorizontal() === false) {
-      if ((testIndex + shipObj.body.length * 10) > 99 && shipObj.body.length > 1) {
+    if (shipObject.isHorizontal() === false) {
+      if ((testIndex + shipObject.body.length * 10) > 99 && shipObject.body.length > 1) {
         return false;
       }
-      for (let i = 0; i < shipObj.body.length; i++) {
+      for (let i = 0; i < shipObject.body.length; i++) {
         if (body[testIndex].hasShip === true) {
           return false;
         }
@@ -55,10 +54,10 @@ const gameBoard = function boardFactory() {
       }
     } else {
       let firstIteration = true;
-      if ((startIndex + shipObj.body.length) > 99 && shipObj.body.length > 1) {
+      if ((startIndex + shipObject.body.length) > 99 && shipObject.body.length > 1) {
         return false;
       }
-      for (let i = 0; i < shipObj.body.length; i++) {
+      for (let i = 0; i < shipObject.body.length; i++) {
         if (firstIteration === false) {
           switch (testIndex) {
             case 10:
@@ -112,31 +111,31 @@ const gameBoard = function boardFactory() {
   }
 
   function placeShipsRandomly() {
-    body.forEach((el) => {
-      el.isShot = false;
-      el.hasShip = false;
+    body.forEach((cell) => {
+      cell.isShot = false;
+      cell.hasShip = false;
     });
 
     const ships = {
-      carrier: ship(5),
-      battleship: ship(4),
-      destroyer: ship(3),
-      submarine_1: ship(2),
-      submarine_2: ship(2),
-      patrolBoat_1: ship(1),
-      patrolBoat_2: ship(1),
-    };
+        carrier: ship(5),
+        battleship: ship(4),
+        destroyer: ship(3),
+        submarine_1: ship(2),
+        submarine_2: ship(2),
+        patrolBoat_1: ship(1),
+        patrolBoat_2: ship(1),
+      };
 
     const shipNames = Object.keys(ships);
     shipNames.forEach((shipName) => {
-      if (getRandomNumber(2) === 0) {
-        ships[shipName].setHorizontally();
-      }
-      let randomStartIndex = getRandomNumber(100);
-      while (isPlaceable(randomStartIndex, ships[shipName]) === false) {
-        randomStartIndex = getRandomNumber(100);
-      }
-      placeShip(randomStartIndex, ships[shipName]);
+        if (getRandomNumber(2) === 0) {
+          ships[shipName].setHorizontally();
+        }
+        let randomStartIndex = getRandomNumber(100);
+        while (isPlaceable(randomStartIndex, ships[shipName]) === false) {
+          randomStartIndex = getRandomNumber(100);
+        }
+        placeShip(randomStartIndex, ships[shipName]);
     });
   }
 
@@ -149,7 +148,7 @@ const gameBoard = function boardFactory() {
     patrolBoat_1: ship(1),
     patrolBoat_2: ship(1),
   };
-  
+
   let shipNames = Object.keys(allShips);
 
   function getNextShip() {
@@ -162,16 +161,16 @@ const gameBoard = function boardFactory() {
   }
 
   function resetBoard() {
-    body.forEach((el) => {
-      el.hasShip = false;
-      el.isShot = false;
+    body.forEach((cell) => {
+      cell.hasShip = false;
+      cell.isShot = false;
     });
     shipNames = Object.keys(allShips);
   }
 
   function resetBoardHits() {
-    body.forEach((el) => {
-      el.isShot = false;
+    body.forEach((cell) => {
+      cell.isShot = false;
     });
   }
 
@@ -191,4 +190,5 @@ const gameBoard = function boardFactory() {
     resetBoardHits,
   };
 };
+
 export default gameBoard;
