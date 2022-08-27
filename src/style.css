@@ -326,3 +326,45 @@ body {
   box-shadow: none;
   transform: translateY(0);
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 750px) {
+
+    .main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .board-header {
+        font-size: 2.5vw;
+        letter-spacing: 1vw;
+    }
+
+    .board {
+        grid-template-rows: repeat(var(--grid-rows), 2.5rem);
+        grid-template-columns: repeat(var(--grid-cols), 2.5rem);
+        gap: 1px;
+        border: 2px solid black;
+    }
+
+    .overlay-window {
+        height: 400%;
+    }
+
+    .start-game-modal {
+        width: 70%;
+    }
+
+    .end-game-modal {
+        width: 50%;
+    }
+}
