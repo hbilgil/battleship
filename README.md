@@ -1,0 +1,2 @@
+# battleship
+A guessing game based on strategies of two players is played on ruled grids on which each player's fleet of warships are marked. The locations of the fleets are concealed from the other player. Players alternate turns calling "shots" at the other player's ships, and the objective of the game is to destroy the opposing player's fleet. In the light of TDD (Test Driven Development) principles, unit testings are pursued to test functions in each modules
