@@ -92,14 +92,22 @@ body {
     cursor: pointer;
 }
 
-.miss {
+#board-player .miss {
+    background-color:rgb(28, 217, 154);
+}
+
+#board-player .hit {
+    background-color: crimson !important;
+}
+
+#board-enemy .miss {
     background-color:rgb(28, 217, 154);
     cursor: not-allowed !important;
 }
 
-.hit {
+#board-enemy .hit {
     background-color: crimson !important;
-    cursor: not-allowed !important; 
+    cursor: not-allowed !important;
 }
 
 /*---FOOTER SECTION---*/
