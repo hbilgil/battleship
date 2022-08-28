@@ -21,15 +21,6 @@ const gameBoard = function boardFactory() {
     return body[shotIndex].hasShip;
   }
 
-  function allShipsSunk() {
-    body.forEach((cell) => {
-      if (cell.hasShip === true && cell.isShot === false) {
-        return false;
-      }
-    });
-    return true;
-  }
-
   function areAllShipsSunk() {
     if (!body.find((cell) => cell.hasShip === true)) {
       return false;
@@ -179,7 +170,6 @@ const gameBoard = function boardFactory() {
     showShips,
     receiveAttack,
     hasShip,
-    allShipsSunk,
     areAllShipsSunk,
     isPlaceable,
     placeShip,
