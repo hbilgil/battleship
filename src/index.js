@@ -1,54 +1,34 @@
 import './style.css';
 import gameBoard from './factories/gameBoard';
 
+//Global UI Variable Declarations
+
 const choiceBoard = gameBoard();
 const shipsLeftCounter = document.querySelector('[value]');
+
+//MODULES
+
+/*---Display Control Module---*/
+
+const displayController = (() => {
+
+//Local UI Variable Declarations
+
+const overlayWindow = document.getElementById('overlay-window');
+const startGameModal = document.getElementById('start-game-modal');
+const endGameModal = document.getElementById('end-game-modal');
 const rotateBtn = document.querySelector('[rotate-ship-btn]');
 const clearBtn = document.querySelector('[clear-all-btn]');
-const randomizeBtn = document.querySelector('[randomize-btn]');
-const startBtn = document.querySelector('[start-btn]');
-const endGameModalBtn = document.querySelector('[end-game-modal-btn]');
+const playAgainBtn = document.querySelector('[end-game-modal-btn]');
 
-/*-----FUNCTIONS-----*/
+//Local Module Methods Declarations
 
-function toggleDirection() {
-  rotateBtn.classList.toggle('horizontal');
-  if(rotateBtn.textContent === 'Horizontal') {
-    rotateBtn.textContent = 'Vertical';
-  } else if (rotateBtn.textContent === 'Vertical') {
-    rotateBtn.textContent = 'Horizontal';
-  }
-}
-
-function clearChoiceBoard() {
-  shipsLeftCounter.textContent = 7;
-  choiceBoard.resetBoard();
-  renderChoiceBoard(choiceBoard);
-}
-
-function randomAllocation() {
-  choiceBoard.placeShipsRandomly();
-  shipsLeftCounter.textContent = 0;
-  renderChoiceBoard(choiceBoard);
-}
-
-function restartGame() {
-  closeEndGameModal();
-  openStartGameModal();
-  clearChoiceBoard();
-  renderChoiceBoard(choiceBoard);
-  initialEvent();
-}
-
-function getRandomNumber(number) {
-  return Math.floor(Math.random() * number);
-}
-
-function renderChoiceBoard(choiceBoard) {
+const renderChoiceBoard = (choiceBoard) => { //allowing to create choiceBoard cells and their add event listeners
   const boardNode = document.getElementById('choice-board');
 
   //Removing old cells if it has any
   while (boardNode.firstChild) boardNode.removeChild(boardNode.firstChild); //we have to completely delete child nodes created as default for preventing rewriting
+  
   //Setting board row and col numbers
   boardNode.style.setProperty('--grid-rows', 10);
   boardNode.style.setProperty('--grid-cols', 10);
@@ -80,12 +60,12 @@ function renderChoiceBoard(choiceBoard) {
       for (let i = 0; i < ship.body.length; i++) {
         const cellNode = boardNode.querySelector(`[data-id = '${cellIndex}']`);
         if (!cellNode) { return };
-        cellNode.classList.add('ship-show');
+        cellNode.classList.add('ship-show'); //shows ship shadow when mouseover
         if (ship.isHorizontal() === true) {
-          cellIndex = Number(cellIndex) + 1;
+          cellIndex = Number(cellIndex) + 1; //shows cells that has sheep horizontally
           if (cellIndex === 10 || cellIndex === 20 || cellIndex === 30
             || cellIndex === 40 || cellIndex === 50 || cellIndex === 60
-            || cellIndex === 70 || cellIndex === 80 || cellIndex === 90) {
+            || cellIndex === 70 || cellIndex === 80 || cellIndex === 90) { //does not allow ships overflow board borders
             return;
           }
         } else {
@@ -105,21 +85,21 @@ function renderChoiceBoard(choiceBoard) {
       for (let i = 0; i < ship.body.length; i++) {
         const cellNode = boardNode.querySelector(`[data-id = '${cellIndex}']`);
         if (!cellNode) { return };
-        cellNode.classList.remove('ship-show');
+        cellNode.classList.remove('ship-show'); //does not show ship shadow when mouseout
         if (ship.isHorizontal() === true) {
-          cellIndex = Number(cellIndex) + 1;
+          cellIndex = Number(cellIndex) + 1; //shows cells that has sheep horizontally
           if (cellIndex === 10 || cellIndex === 20 || cellIndex === 30
             || cellIndex === 40 || cellIndex === 50 || cellIndex === 60
-            || cellIndex === 70 || cellIndex === 80 || cellIndex === 90) {
+            || cellIndex === 70 || cellIndex === 80 || cellIndex === 90) { //does not allow ships overflow board borders
             return;
           }
         } else {
-          cellIndex = Number(cellIndex) + 10;
+          cellIndex = Number(cellIndex) + 10; //shows cells that has sheep vertically
         }
       }
     });
     cell.addEventListener('click', () => {
-      let cellIndex = Number(cell.getAttribute('data-id')); //use Number method as cellIndex will be used as number in other functions
+      let cellIndex = Number(cell.getAttribute('data-id')); //use Number method as cellIndex will be used as number in other methods
       const ship = choiceBoard.getNextShip();
       if (!ship) { return };
       if (rotateBtn.classList.contains('horizontal')) {
@@ -127,7 +107,7 @@ function renderChoiceBoard(choiceBoard) {
       } else {
         ship.setVertically();
       }
-      if (choiceBoard.isPlaceable(cellIndex, ship) === true) {
+      if (choiceBoard.isPlaceable(cellIndex, ship) === true) { //checks available spaces for ships
         choiceBoard.placeShip(cellIndex, ship);
         renderChoiceBoard(choiceBoard);
         choiceBoard.removeShipFromArray();
@@ -135,28 +115,24 @@ function renderChoiceBoard(choiceBoard) {
       }
     });
   });
-}
+};
 
-function initialEvent() {
-  initGameBoards(choiceBoard);
-  startBtn.addEventListener('click', setGame);
-}
+const clearChoiceBoard = () => { //allowing to delete ships allocated to choiceBoard cells
+  shipsLeftCounter.textContent = 7;
+  if (rotateBtn.classList.contains('horizontal')) { //ships are always initially set vertical
+    rotateBtn.classList.remove('horizontal'); 
+    rotateBtn.textContent = 'Horizontal';
+  }
+  choiceBoard.resetBoard();
+  renderChoiceBoard(choiceBoard);
+};
 
-function initGameBoards(playerBoard) {
-  const playerBoardObj = playerBoard;
-  playerBoardObj.showShips = true;
-  const enemyBoard = gameBoard();
-  enemyBoard.placeShipsRandomly();
-  renderBoard(playerBoardObj, 'player');
-  renderBoard(enemyBoard, 'enemy');
-  setAttackEvent('enemy', enemyBoard, playerBoardObj);
-}
-
-function renderBoard(board, boardName) {
+const renderGameBoards = (board, boardName) => { //allowing to create gameBoard cells
   const boardNode = document.getElementById(`board-${boardName}`);
 
   //Removing old cells if it has any
   while (boardNode.firstChild) boardNode.removeChild(boardNode.firstChild); //we have to completely delete child nodes created as default for preventing rewriting 
+  
   //Setting board row and col numbers
   boardNode.style.setProperty('--grid-rows', 10);
   boardNode.style.setProperty('--grid-cols', 10);
@@ -171,71 +147,108 @@ function renderBoard(board, boardName) {
           cell.classList.add('has-ship');
         }
       }
-      if (board.body[i].isShot === true) {
-        if (board.body[i].hasShip === true) {
-          cell.classList.add('has-ship', 'hit');
+      if (board.body[i].isShot === true) { //checks whether the cell has been shot or NOT
+        if (board.body[i].hasShip === true) { //checks whether the cell has ship or NOT
+          cell.classList.add('has-ship', 'hit'); //cells are colored by red color if any part of a ship is shot
         } else {
-          cell.classList.add('miss');
+          cell.classList.add('miss'); //cells are colored by green color if an empty cell is shot
         }
       }
     boardNode.appendChild(cell);
   }
 }
 
-function setGame() {
-  if (Number(shipsLeftCounter.textContent) !== 0) return;
-  choiceBoard.resetBoardHits();
-  initGameBoards(choiceBoard);
-  closeStartGameModal();
-}
+const restartGame = () => { //allowing to start a new game and clear boards
+  closeEndGameModal();
+  openStartGameModal();
+  clearChoiceBoard();
+  renderChoiceBoard(choiceBoard);
+  gameController.initGameBoards(choiceBoard);
+};
 
-function closeStartGameModal() {
-  const overlayWindow = document.getElementById('overlay-window');
-  const startGameModal = document.getElementById('start-game-modal');
-
-  overlayWindow.classList.remove('active');
-  startGameModal.classList.remove('active');
-}
-
-function openStartGameModal() { //allowing to create grid items (10*10) inside the boards dynamically
-  const overlayWindow = document.getElementById('overlay-window');
-  const startGameModal = document.getElementById('start-game-modal');
-
+const openStartGameModal = () => { //allowing to open start game modal
   overlayWindow.classList.add('active');
   startGameModal.classList.add('active');
 };
 
-function closeEndGameModal() {
-  const overlayWindow = document.getElementById('overlay-window');
-  const endGameModal = document.getElementById('end-game-modal');
-
+const closeStartGameModal = () => { //allowing to close start game modal
   overlayWindow.classList.remove('active');
-  endGameModal.classList.remove('active');
+  startGameModal.classList.remove('active');
 };
 
-function openEndGameModal() {
-  const overlayWindow = document.getElementById('overlay-window');
-  const endGameModal = document.getElementById('end-game-modal');
-
+const openEndGameModal = () => { //allowing to open end game modal
   overlayWindow.classList.add('active');
   endGameModal.classList.add('active');
 };
 
-function setAttackEvent(boardName, enemyBoard, yourBoard) {
+const closeEndGameModal = () => { //allowing to close end game modal
+  overlayWindow.classList.remove('active');
+  endGameModal.classList.remove('active');
+};
+
+const toggleDirection = () => { //allowing to change direction of ships between vertical and horizontal
+  rotateBtn.classList.toggle('horizontal');
+  if(rotateBtn.textContent === 'Horizontal') {
+    rotateBtn.textContent = 'Vertical';
+  } else if (rotateBtn.textContent === 'Vertical') {
+    rotateBtn.textContent = 'Horizontal';
+  }
+};
+
+/*---Local Event Listeners---*/
+
+rotateBtn.addEventListener('click', toggleDirection);
+clearBtn.addEventListener('click', clearChoiceBoard);
+playAgainBtn.addEventListener('click', restartGame);
+
+return { renderChoiceBoard, renderGameBoards, restartGame, closeStartGameModal, openEndGameModal };
+
+})();
+
+
+/*---Game Control Module---*/
+
+const gameController = (() => {
+
+//Local UI Variable Declarations
+
+const randomizeBtn = document.querySelector('[randomize-btn]');
+const startBtn = document.querySelector('[start-btn]');
+
+//Local Module Methods Declarations
+
+const setGame = () => { //allowing to set ships allocated in choiceBoard into playerBoard
+  if (Number(shipsLeftCounter.textContent) !== 0) return;
+  choiceBoard.resetBoardHits();
+  initGameBoards(choiceBoard);
+  displayController.closeStartGameModal();
+}
+
+const initGameBoards = (playerBoard) => { //allowing to show ships allocated in playerBoard and randomly place ships in enemyBoard
+  const playerBoardObj = playerBoard;
+  playerBoardObj.showShips = true; //ships are shown in playerBoard
+  const enemyBoard = gameBoard();
+  enemyBoard.placeShipsRandomly(); //ships in enemyBoard are allocated randomly
+  displayController.renderGameBoards(playerBoardObj, 'player');
+  displayController.renderGameBoards(enemyBoard, 'enemy');
+  handleAttackEvent('enemy', enemyBoard, playerBoardObj);
+}
+
+const handleAttackEvent = (boardName, enemyBoard, yourBoard) => { //allowing to handle clicks in gameBoards to hit ships
   const boardNode = document.getElementById(`board-${boardName}`);
   const cells = boardNode.querySelectorAll('.grid-item');
   cells.forEach((cell) => {
     cell.addEventListener('click', (e) => {
-      if(e.currentTarget.classList.contains('miss') === true || e.target.classList.contains('hit')) return;
+      if(e.currentTarget.classList.contains('miss') === true || e.target.classList.contains('hit')) return; //does NOT allow multiple clicks to already shot cells
       const cellIndex = e.currentTarget.getAttribute('data-id');
-      enemyBoard.receiveAttack(cellIndex);
-      renderBoard(enemyBoard, boardName);
-      if (enemyBoard.areAllShipsSunk() === true) {
+      enemyBoard.receiveAttack(cellIndex); //player starts the game
+      displayController.renderGameBoards(enemyBoard, boardName);
+      if (enemyBoard.areAllShipsSunk() === true) { //checks whether ALL ships are hit or NOT
         declareWinner(boardName);
       }
       if (enemyBoard.hasShip(cellIndex)) { //allowing to hit once again after successful shot
-        setAttackEvent(boardName, enemyBoard, yourBoard);
-        if (boardName === 'player') {
+        handleAttackEvent(boardName, enemyBoard, yourBoard);
+        if (boardName === 'player') { //computer's turn
           setTimeout(() => {
             const playerBoard = document.getElementById('board-player');
             let randomShotIndex = getRandomNumber(100);
@@ -247,9 +260,9 @@ function setAttackEvent(boardName, enemyBoard, yourBoard) {
         }
         return;
       } 
-      if (boardName === 'enemy') {
+      if (boardName === 'enemy') { //player's turn
         setTimeout(() => {
-          setAttackEvent('player', yourBoard, enemyBoard);
+          handleAttackEvent('player', yourBoard, enemyBoard);
           const playerBoard = document.getElementById('board-player');
           let randomShotIndex = getRandomNumber(100);
           while (yourBoard.body[randomShotIndex].isShot === true) {
@@ -258,29 +271,41 @@ function setAttackEvent(boardName, enemyBoard, yourBoard) {
           playerBoard.querySelector(`[data-id='${randomShotIndex}']`).click();
         }, 300);
       } else {
-        setTimeout(() => {
-          setAttackEvent('enemy', yourBoard, enemyBoard);
+        setTimeout(() => { //allowing to hit once again after successful shot by computer
+          handleAttackEvent('enemy', yourBoard, enemyBoard);
         }, 200);
       }
     });
   });
 }
 
-function declareWinner(boardName) {
-  openEndGameModal();
+const declareWinner = (boardName) => { //allowing to show winner
+  displayController.openEndGameModal();
   const endGameMessage = document.querySelector('[end-game-modal-message]');
-  if (boardName === 'player') {
-    endGameMessage.textContent = 'You Lost!';
-  } else {
+  if (boardName === 'player') { //computer wins
+    endGameMessage.textContent = '🙁 You Lost! 🙁';
+  } else { //player wins
     endGameMessage.textContent = '🎉 You Won! 🎉';
   }
 }
 
-/*---EVENT LISTENERS---*/
+const randomizeChoiceBoardAllocation = () => { //allowing to allocate ships randomly at choiceBoard
+  choiceBoard.placeShipsRandomly();
+  shipsLeftCounter.textContent = 0;
+  displayController.renderChoiceBoard(choiceBoard);
+}
 
-rotateBtn.addEventListener('click', toggleDirection);
-clearBtn.addEventListener('click', clearChoiceBoard);
-randomizeBtn.addEventListener('click', randomAllocation);
-endGameModalBtn.addEventListener('click', restartGame);
+const getRandomNumber = (number) => { //allowing to choose a number randomly between 0-99 (data-ids)
+  return Math.floor(Math.random() * number);
+}
 
-restartGame();
+/*---Local Event Listeners---*/
+
+randomizeBtn.addEventListener('click', randomizeChoiceBoardAllocation);
+startBtn.addEventListener('click', setGame);
+
+return { initGameBoards };
+
+})();
+
+displayController.restartGame(); //onload function invocation to start the game
