@@ -92,16 +92,14 @@ body {
     cursor: pointer;
 }
 
-#board-player .grid-item.miss,
-#board-enemy .grid-item.miss {
+.miss {
     background-color:rgb(28, 217, 154);
-    cursor: not-allowed;
+    cursor: not-allowed !important;
 }
 
-#board-player .grid-item.has-ship.hit.miss
-#board-enemy .grid-item.has-ship.hit.miss {
-    background-color: crimson;
-    cursor: not-allowed;
+.hit {
+    background-color: crimson !important;
+    cursor: not-allowed !important; 
 }
 
 /*---FOOTER SECTION---*/
@@ -257,11 +255,11 @@ body {
 }
 
 .has-ship {
-    background-color: cadetblue;
+    background-color: dimgray;
 }
 
 .ship-show {
-    background-color: rgba(95, 158, 160, 0.596);
+    background-color: lightgrey;
 }
 
 .bottom-buttons {
