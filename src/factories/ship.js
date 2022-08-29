@@ -18,12 +18,26 @@ const ship = function shipFactory(length) {
     function isHorizontal() {
       return horizontal;
     }
+
+    function hit(hitIndex) { //will be used in tests
+      body[hitIndex] = 'hit';
+    }
+
+    function isSunk() { //will be used in tests
+      if (body.includes('') === false) {
+        return true;
+      }
+      return false;
+    }
   
     return {
       body,
+      horizontal,
       setHorizontally,
-      isHorizontal,
       setVertically,
+      isHorizontal,
+      hit,
+      isSunk
     };
 };
   
