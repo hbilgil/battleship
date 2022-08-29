@@ -11,12 +11,6 @@ describe('ship factory function', () => {
         expect(newShip.horizontal).toBe(false);
     });
 
-    test('horizontal variable returns false when setVertically method is called', () => {
-        const newShip = ship(3);
-        newShip.setVertically();
-        expect(newShip.horizontal).toBe(false);
-    });
-
     test('has a isHorizontal method when it is called, returns initial horizontal variable value', () => {
         const newShip = ship(2);
         expect(newShip.isHorizontal()).toBe(false);
